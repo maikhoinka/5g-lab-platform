@@ -15,19 +15,19 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout code
-	uses: actions/checkout@v6
-      - name: Configure AWS credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v6
-        with:
-          aws-region: eu-north-1
-	  role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-      - name: Login to Amazon ECR
-	id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-      - name: Build and push Docker image
-	env:
-	  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-	run: |
-	  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} .
-	  docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+    - name: Checkout code
+      uses: actions/checkout@v6
+    - name: Configure AWS credentials via OIDC
+      uses: aws-actions/configure-aws-credentials@v6
+      with:
+        aws-region: eu-north-1
+        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+    - name: Build and push Docker image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
