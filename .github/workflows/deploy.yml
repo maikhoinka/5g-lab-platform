@@ -16,18 +16,54 @@ jobs:
 
     steps:
       - name: Checkout code
-	uses: actions/checkout@v6
+        uses: actions/checkout@v6
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-region: eu-north-1
-	  role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
       - name: Login to Amazon ECR
-	id: login-ecr
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push Docker image
-	env:
-	  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-	run: |
-	  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} .
-	  docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: eu-north-1
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+      - name: Install kubectl and helm
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name 5g-lab-cluster --region eu-north-1
+
+      - name: Deploy with Helm
+        env:
+          ECR_REGISTRY: 661406599826.dkr.ecr.eu-north-1.amazonaws.com
+        run: |
+          helm upgrade --install 5g-lab-app ./helm/5g-lab-app \
+            --set image.tag=${{ github.sha }} \
+            --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
+  debug:
+    needs: [build-and-push, deploy]
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Failed to build and deploy"
