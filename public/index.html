@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FiberSync</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/fix.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">ƒ</span><span>Fiber<span>Sync</span></span></a>
+    <nav>
+      <button class="nav-link active" data-view="grid">Switch grid</button>
+      <button class="nav-link" data-view="circuits">Optical circuits</button>
+      <button class="nav-link" data-view="e2e">E2E pairings</button>
+      <button class="nav-link" data-view="inventory">Physical inventory</button>
+    </nav>
+    <div class="sidebar-footer"><span class="pulse"></span> System operational</div>
+  </aside>
+  <main>
+    <header><div><div class="eyebrow">FIBER OPERATIONS</div><h1 id="title">Optical switch grid</h1></div><button id="primary" class="primary">New circuit</button></header>
+    <section id="grid" class="view active"><div class="section-heading"><div><h2>Switch grid</h2><p>Four modules with paired optical endpoints.</p></div></div><div id="switch-grid" class="switch-grid"></div></section>
+    <section id="circuits" class="view"><div class="section-heading"><div><h2>Optical circuits</h2><p>Documented routes through the lab.</p></div></div><div class="circuit-tools"><input id="circuit-search" placeholder="Search circuits"><select id="circuit-type"><option value="ALL">All types</option><option value="RADIO">Radio</option><option value="TESTLINE">Test line</option></select></div><div id="circuit-list" class="circuit-list"></div></section>
+    <section id="e2e" class="view"><div class="section-heading"><div><h2>End-to-end pairings</h2><p>Radio and test line connections.</p></div><button id="new-link" class="primary">New pairing</button></div><div class="panel table-wrap"><table><thead><tr><th>Radio</th><th>OUT</th><th>Test line</th><th>IN</th><th></th></tr></thead><tbody id="links"></tbody></table></div><div id="pairing-route" class="pairing-route" hidden></div></section>
+    <section id="inventory" class="view"><div class="section-heading"><div><h2>Physical inventory</h2><p>Teams, labs, racks and patch panels.</p></div><button id="new-inventory" class="primary">Add item</button></div><div id="inventory-list" class="inventory-grid"></div></section>
+  </main>
+  <dialog id="modal"><form method="dialog" id="form"><div class="modal-head"><div><div id="modal-label" class="eyebrow"></div><h2 id="modal-title"></h2></div><button type="button" id="close" class="icon-button">Close</button></div><div id="fields"></div><div class="modal-actions"><button type="button" id="cancel" class="secondary">Cancel</button><button class="primary">Save</button></div></form></dialog>
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+  <script src="/filters.js"></script>
+</body>
+</html>
