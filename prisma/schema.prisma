@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum NodeType {
+  RADIO
+  SWITCH
+  SERVER
+}
+
+enum NodeStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+model Node {
+  id                String       @id @default(cuid())
+  name              String
+  type              NodeType
+  location          String
+  status            NodeStatus   @default(ACTIVE)
+  createdAt         DateTime     @default(now())
+  sourceConnections Connection[] @relation("SourceNode")
+  targetConnections Connection[] @relation("TargetNode")
+}
+
+model Connection {
+  id           String           @id @default(cuid())
+  sourceNodeId String
+  targetNodeId String
+  fiberCount   Int
+  status       ConnectionStatus @default(ACTIVE)
+  notes        String?
+  createdAt    DateTime         @default(now())
+  sourceNode   Node             @relation("SourceNode", fields: [sourceNodeId], references: [id])
+  targetNode   Node             @relation("TargetNode", fields: [targetNodeId], references: [id])
+
+  @@index([sourceNodeId])
+  @@index([targetNodeId])
+}

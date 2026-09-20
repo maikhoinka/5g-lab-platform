@@ -1,3 +1,7 @@
 node_modules/
+<<<<<<< HEAD
 data/
+=======
+dist/
+>>>>>>> 29478eedbbc54a3af595eead0625934e4f18b060
 .env
