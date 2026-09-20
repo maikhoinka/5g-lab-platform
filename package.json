@@ -1,38 +1,29 @@
 {
-<<<<<<< HEAD
   "name": "fibersync",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
-  },
-  "dependencies": {
-    "better-sqlite3": "^11.8.1",
-    "express": "^4.21.2"
-=======
-  "name": "5g-lab-fiber-api",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
+    "start:legacy": "node server.js",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "test": "npm run build && node --test test/switch-grid-pairing.test.js"
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
+    "better-sqlite3": "^11.8.1",
     "dotenv": "^16.5.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
     "prisma": "^6.6.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
->>>>>>> 29478eedbbc54a3af595eead0625934e4f18b060
   }
 }

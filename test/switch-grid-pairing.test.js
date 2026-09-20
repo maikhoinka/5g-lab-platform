@@ -30,9 +30,9 @@ const startServer = async () => {
   const port = await getFreePort();
   const testDb = 'E:/Portfolio/fibersync/data/test-fibersync.db';
   fs.rmSync(testDb, { force: true });
-  const server = spawn(process.execPath, ['server.js'], {
+  const server = spawn(process.execPath, ['dist/server.js'], {
     cwd: 'E:/Portfolio/fibersync',
-    env: { ...process.env, PORT: String(port), DATABASE_URL: './data/test-fibersync.db' },
+    env: { ...process.env, PORT: String(port), SQLITE_DATABASE_URL: './data/test-fibersync.db' },
     stdio: ['ignore', 'pipe', 'pipe']
   });
 
