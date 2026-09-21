@@ -46,10 +46,7 @@ httpRoute:
 
 env:
   - name: DATABASE_URL
-    valueFrom:
-      secretKeyRef:
-        name: 5g-lab-db-secret
-        key: DATABASE_URL
+    value: ""
 
 resources:
   limits:

@@ -42,7 +42,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: DATABASE_URL
-              value: {{ .Values.env.DATABASE_URL | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: 5g-lab-db-secret
+                  key: DATABASE_URL
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
