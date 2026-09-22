@@ -16,6 +16,7 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 
+  enable_nat_gateway = true
   single_nat_gateway = true
   enable_dns_hostnames = true
   public_subnet_tags = {
@@ -47,11 +48,11 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
   eks_managed_node_groups = {
     default = {
-      instance_types = ["t3.medium"]
-      capacity_type  = "SPOT"
+      instance_types = ["t3.small", "t3.medium", "t2.medium"]
+      capacity_type  = "ON_DEMAND"
       min_size       = 1
-      max_size       = 2
-      desired_size   = 1
+      max_size       = 3
+      desired_size   = 2
     }
   }
   tags = {
