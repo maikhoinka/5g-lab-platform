@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+* { font-family: Montserrat, Arial, sans-serif !important; }
+
+/* Circuit filtering controls. */
+.circuit-tools { display:flex; gap:12px; margin:-3px 0 20px; padding:14px; background:#fff; border:1px solid #e5eaf2; border-radius:11px; box-shadow:0 5px 18px rgba(23,35,59,.035); }
+.circuit-tools input,.circuit-tools select { height:42px; border:1px solid #d7dfeb; border-radius:7px; background:#fbfcff; padding:0 13px; font-size:12px; font-weight:500; color:#17233b; outline:none; transition:border-color .16s,box-shadow .16s; }
+.circuit-tools input { flex:1; min-width:0; }
+.circuit-tools select { min-width:180px; cursor:pointer; }
+.circuit-tools input:focus,.circuit-tools select:focus { border-color:#355cf5; box-shadow:0 0 0 3px rgba(53,92,245,.12); background:#fff; }
+.circuit-tools input::placeholder { color:#8793a8; }
+.circuit[hidden] { display:none !important; }
+.edit { color:#355cf5; }
+.circuit { grid-template-columns:180px 1fr auto; }
+.circuit-actions { display:flex; align-items:center; gap:4px; white-space:nowrap; }
+.circuit-actions .icon-button { height:32px; display:inline-flex; align-items:center; justify-content:center; }
+.filter-empty { margin-top:2px; border:1px dashed #cfd7e6; border-radius:10px; background:#fff; }
+.pairing-row { cursor:pointer; }
+.pairing-row:hover { background:#f4f7ff; }
+.pairing-route { margin-top:16px; padding:20px; border:1px solid #dce4f2; border-radius:11px; background:#fff; }
+.pairing-route-head { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.pairing-route-head h3 { margin:4px 0 0; }
+.route-path { display:flex; align-items:stretch; gap:8px; overflow-x:auto; padding:4px 0 8px; }
+.route-node { min-width:116px; padding:10px 12px; border:1px solid #dce4f2; border-radius:7px; background:#fbfcff; color:#17233b; display:flex; flex-direction:column; gap:5px; white-space:nowrap; }
+.route-node small { color:#72809a; font:10px 'DM Mono'; }
+.route-arrow { align-self:center; color:#355cf5; font-size:18px; }
+@media(max-width:560px){.circuit-tools{display:grid}.circuit-tools select{width:100%}}
+
+.switch-grid { display:grid; grid-template-columns:repeat(2,minmax(280px,1fr)); gap:16px; }
+.switch-module { background:#fff; border:1px solid #e5eaf2; border-radius:11px; overflow:hidden; }
+.switch-module>header { padding:16px 18px; margin:0; border-bottom:1px solid #e5eaf2; }
+.switch-module>header h2 { margin-top:3px; }
+.module-count { color:#72809a; font-size:11px; }
+.switch-module-head,.switch-row { display:grid; grid-template-columns:58px 1fr 1fr; align-items:center; gap:8px; }
+.switch-module-head { padding:10px 14px; color:#72809a; font:600 10px 'DM Mono'; text-transform:uppercase; }
+.switch-row { padding:7px 14px; border-top:1px solid #edf0f5; }
+.switch-row>strong { font:600 12px 'DM Mono'; color:#17233b; }
+.switch-port { min-height:52px; border:1px solid #e5eaf2; background:#fff; border-radius:7px; padding:7px 9px; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; gap:0 7px; align-items:center; text-align:left; cursor:pointer; }
+.switch-port span { color:#72809a; font:10px 'DM Mono'; }
+.port-label,.in-label { font-weight:700; }
+.port-state { grid-column:2; }
+.out-number { width:23px; height:23px; border-radius:50%; display:grid; place-items:center; background:#c54351; color:#fff; font-size:11px; grid-row:1 / span 2; }
+.switch-port .out-number { display:grid; place-items:center; justify-self:center; align-self:center; margin:0; line-height:1; }
+.port-device { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:700; color:#17233b !important; }
+.switch-port.occupied { border-color:#a3b4ff; background:#f2f4ff; }
+.switch-port.linked { border-color:#72d4ae; background:#effbf6; box-shadow:0 0 0 2px rgba(21,153,107,.12); }
+.switch-port.linked .port-device { color:#15996b !important; }
+.switch-port.out-port.occupied .out-number,.switch-port.out-port.linked .out-number { background:#a62938; }
+@media(max-width:760px){.switch-grid{grid-template-columns:1fr;}}
