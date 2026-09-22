@@ -67,7 +67,7 @@ jobs:
         env:          
           ECR_REGISTRY: 661406599826.dkr.ecr.eu-north-1.amazonaws.com        
         run: |          
-          helm upgrade --install fiveg-lab-app ~/5g-lab-platform/helm --set image.tag=${{ github.sha }} --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY  
+          helm upgrade --install fiveg-lab-app /home/runner/work/5g-lab-platform/5g-lab-platform/helm --set image.tag=${{ github.sha }} --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY  
 
   debug:    
     needs: [build-and-push, deploy]    
